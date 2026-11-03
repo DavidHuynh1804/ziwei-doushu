@@ -340,7 +340,7 @@ export default function ChartSummary({ chart }: ChartSummaryProps) {
                             {isVi ? 'Bắt buộc' : '必须'}
                           </span>
                           <span style={{ opacity: 0.6 }}> · </span>
-                          {p.conditions.required.map(c => tStar(c)).join('、')}
+                          {p.conditions.required.map(c => tStar(c)).join(isVi ? ', ' : '、')}
                         </div>
                       )}
                       {p.conditions.bonus && p.conditions.bonus.length > 0 && (
@@ -349,7 +349,7 @@ export default function ChartSummary({ chart }: ChartSummaryProps) {
                             {isVi ? 'Thêm điểm' : '加分'}
                           </span>
                           <span style={{ opacity: 0.6 }}> · </span>
-                          {p.conditions.bonus.map(c => tStar(c)).join('、')}
+                          {p.conditions.bonus.map(c => tStar(c)).join(isVi ? ', ' : '、')}
                         </div>
                       )}
                       {p.conditions.breaking && p.conditions.breaking.length > 0 && (
@@ -358,7 +358,7 @@ export default function ChartSummary({ chart }: ChartSummaryProps) {
                             {isVi ? 'Phá cách' : '破格'}
                           </span>
                           <span style={{ opacity: 0.6 }}> · </span>
-                          {p.conditions.breaking.map(c => tStar(c)).join('、')}
+                          {p.conditions.breaking.map(c => tStar(c)).join(isVi ? ', ' : '、')}
                         </div>
                       )}
                     </div>
