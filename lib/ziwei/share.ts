@@ -1,11 +1,17 @@
 import type { BirthFormState } from '@/components/BirthForm';
 import type { BirthInfo } from './types';
 import { branchFromSolarMinutes, resolveZiweiDayOffset, shiftGregorianDate } from './true-solar-time';
+import { isVietnamProvince } from './cities';
 
 /** 根据北京时间 + 经度计算真太阳时时辰支 (0-11) */
-export function calcTrueSolarBranch(clockHour: number, clockMinute: number, longitude: number): number {
+export function calcTrueSolarBranch(
+  clockHour: number,
+  clockMinute: number,
+  longitude: number,
+  standardMeridian = 120,
+): number {
   const clockMins = clockHour * 60 + clockMinute;
-  const offset = (longitude - 120) * 4;
+  const offset = (longitude - standardMeridian) * 4;
   const solar = ((clockMins + offset) % 1440 + 1440) % 1440;
   if (solar >= 1380 || solar < 60) return 0;
   return Math.floor((solar - 60) / 120) + 1;
@@ -27,7 +33,8 @@ export function formToBirthInfo(form: BirthFormState): BirthInfo {
   // 晚子时换日按真太阳时判定，与时辰支同一口径（见 true-solar-time.ts 的 resolveZiweiDayOffset）。
   // 只看钟表 23 点会和经度校正后的时辰错位：东经 100° 钟表 23:30 是真太阳时 22:10 亥时，不该换日。
   if (!form.unknownTime) {
-    const solar = (parseInt(form.clockHour) || 0) * 60 + (parseInt(form.clockMinute) || 0) + (form.longitude - 120) * 4;
+    const meridian = isVietnamProvince(form.province) ? 105 : 120;
+    const solar = (parseInt(form.clockHour) || 0) * 60 + (parseInt(form.clockMinute) || 0) + (form.longitude - meridian) * 4;
     const normalizedMinutes = ((solar % 1440) + 1440) % 1440;
     hour = branchFromSolarMinutes(normalizedMinutes);
     const dayOffset = resolveZiweiDayOffset({ dayOffset: Math.floor(solar / 1440), normalizedMinutes, branch: hour });

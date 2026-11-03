@@ -702,3 +702,518 @@ export const PROVINCES: ProvinceInfo[] = [
   // 注：海外出生暂未支持，因 share.ts 真太阳时算法假设输入为北京时间(UTC+8)。
   // 海外用户请把当地时间换算成北京时间再填写（或填出生时所在的中国时区相对城市）。
 ];
+
+export const VIETNAM_PROVINCES: ProvinceInfo[] = [
+  {
+    name: 'Hà Nội',
+    cities: [
+      { name: 'Hà Nội', longitude: 105.85 },
+      { name: 'Ba Đình', longitude: 105.83 },
+      { name: 'Hoàn Kiếm', longitude: 105.85 },
+      { name: 'Đống Đa', longitude: 105.82 },
+      { name: 'Cầu Giấy', longitude: 105.79 },
+      { name: 'Hai Bà Trưng', longitude: 105.85 },
+      { name: 'Hà Đông', longitude: 105.77 },
+      { name: 'Long Biên', longitude: 105.89 },
+      { name: 'Tây Hồ', longitude: 105.82 },
+      { name: 'Nam Từ Liêm', longitude: 105.76 },
+      { name: 'Bắc Từ Liêm', longitude: 105.75 },
+      { name: 'Hoàng Mai', longitude: 105.86 },
+      { name: 'Thanh Xuân', longitude: 105.81 },
+      { name: 'Sơn Tây', longitude: 105.50 },
+    ],
+  },
+  {
+    name: 'TP. Hồ Chí Minh',
+    cities: [
+      { name: 'TP. Hồ Chí Minh', longitude: 106.66 },
+      { name: 'Quận 1', longitude: 106.70 },
+      { name: 'Quận 3', longitude: 106.68 },
+      { name: 'Quận 5', longitude: 106.66 },
+      { name: 'Quận 7', longitude: 106.72 },
+      { name: 'TP. Thủ Đức', longitude: 106.75 },
+      { name: 'Bình Thạnh', longitude: 106.70 },
+      { name: 'Tân Bình', longitude: 106.65 },
+      { name: 'Gò Vấp', longitude: 106.67 },
+      { name: 'Bình Tân', longitude: 106.60 },
+      { name: 'Củ Chi', longitude: 106.50 },
+      { name: 'Cần Giờ', longitude: 106.96 },
+    ],
+  },
+  {
+    name: 'Đà Nẵng',
+    cities: [
+      { name: 'Đà Nẵng', longitude: 108.22 },
+      { name: 'Hải Châu', longitude: 108.22 },
+      { name: 'Thanh Khê', longitude: 108.19 },
+      { name: 'Sơn Trà', longitude: 108.25 },
+      { name: 'Ngũ Hành Sơn', longitude: 108.26 },
+      { name: 'Liên Chiểu', longitude: 108.15 },
+      { name: 'Cẩm Lệ', longitude: 108.19 },
+      { name: 'Hòa Vang', longitude: 108.10 },
+    ],
+  },
+  {
+    name: 'Hải Phòng',
+    cities: [
+      { name: 'Hải Phòng', longitude: 106.68 },
+      { name: 'Hồng Bàng', longitude: 106.68 },
+      { name: 'Ngô Quyền', longitude: 106.69 },
+      { name: 'Lê Chân', longitude: 106.68 },
+      { name: 'Đồ Sơn', longitude: 106.78 },
+      { name: 'Cát Bà', longitude: 106.99 },
+      { name: 'Thủy Nguyên', longitude: 106.69 },
+    ],
+  },
+  {
+    name: 'Cần Thơ',
+    cities: [
+      { name: 'Cần Thơ', longitude: 105.78 },
+      { name: 'Ninh Kiều', longitude: 105.78 },
+      { name: 'Cái Răng', longitude: 105.75 },
+      { name: 'Bình Thủy', longitude: 105.73 },
+      { name: 'Ô Môn', longitude: 105.62 },
+      { name: 'Thốt Nốt', longitude: 105.53 },
+    ],
+  },
+  {
+    name: 'Thừa Thiên Huế',
+    cities: [
+      { name: 'Huế', longitude: 107.59 },
+      { name: 'Hương Thủy', longitude: 107.65 },
+      { name: 'Hương Trà', longitude: 107.52 },
+      { name: 'Phong Điền', longitude: 107.30 },
+      { name: 'Phú Lộc', longitude: 107.89 },
+    ],
+  },
+  {
+    name: 'Khánh Hòa',
+    cities: [
+      { name: 'Nha Trang', longitude: 109.19 },
+      { name: 'Cam Ranh', longitude: 109.14 },
+      { name: 'Ninh Hòa', longitude: 109.13 },
+      { name: 'Vạn Ninh', longitude: 109.24 },
+    ],
+  },
+  {
+    name: 'Quảng Ninh',
+    cities: [
+      { name: 'Hạ Long', longitude: 107.08 },
+      { name: 'Cẩm Phả', longitude: 107.28 },
+      { name: 'Uông Bí', longitude: 106.77 },
+      { name: 'Móng Cái', longitude: 107.97 },
+    ],
+  },
+  {
+    name: 'Nghệ An',
+    cities: [
+      { name: 'Vinh', longitude: 105.68 },
+      { name: 'Cửa Lò', longitude: 105.73 },
+      { name: 'Hoàng Mai', longitude: 105.71 },
+      { name: 'Thái Hòa', longitude: 105.43 },
+    ],
+  },
+  {
+    name: 'Thanh Hóa',
+    cities: [
+      { name: 'Thanh Hóa', longitude: 105.78 },
+      { name: 'Sầm Sơn', longitude: 105.90 },
+      { name: 'Bỉm Sơn', longitude: 105.92 },
+      { name: 'Nghi Sơn', longitude: 105.79 },
+    ],
+  },
+  {
+    name: 'Lâm Đồng',
+    cities: [
+      { name: 'Đà Lạt', longitude: 108.44 },
+      { name: 'Bảo Lộc', longitude: 107.81 },
+      { name: 'Đức Trọng', longitude: 108.38 },
+    ],
+  },
+  {
+    name: 'Đồng Nai',
+    cities: [
+      { name: 'Biên Hòa', longitude: 106.83 },
+      { name: 'Long Khánh', longitude: 107.24 },
+      { name: 'Long Thành', longitude: 106.96 },
+    ],
+  },
+  {
+    name: 'Bình Dương',
+    cities: [
+      { name: 'Thủ Dầu Một', longitude: 106.65 },
+      { name: 'Dĩ An', longitude: 106.77 },
+      { name: 'Thuận An', longitude: 106.70 },
+      { name: 'Tân Uyên', longitude: 106.75 },
+      { name: 'Bến Cát', longitude: 106.61 },
+    ],
+  },
+  {
+    name: 'Bà Rịa - Vũng Tàu',
+    cities: [
+      { name: 'Vũng Tàu', longitude: 107.08 },
+      { name: 'Bà Rịa', longitude: 107.17 },
+      { name: 'Phú Mỹ', longitude: 107.05 },
+      { name: 'Côn Đảo', longitude: 106.61 },
+    ],
+  },
+  {
+    name: 'An Giang',
+    cities: [
+      { name: 'Long Xuyên', longitude: 105.43 },
+      { name: 'Châu Đốc', longitude: 105.12 },
+      { name: 'Tân Châu', longitude: 105.24 },
+    ],
+  },
+  {
+    name: 'Bắc Giang',
+    cities: [
+      { name: 'Bắc Giang', longitude: 106.20 },
+      { name: 'Việt Yên', longitude: 106.13 },
+    ],
+  },
+  {
+    name: 'Bắc Kạn',
+    cities: [
+      { name: 'Bắc Kạn', longitude: 105.84 },
+    ],
+  },
+  {
+    name: 'Bạc Liêu',
+    cities: [
+      { name: 'Bạc Liêu', longitude: 105.72 },
+      { name: 'Giá Rai', longitude: 105.41 },
+    ],
+  },
+  {
+    name: 'Bắc Ninh',
+    cities: [
+      { name: 'Bắc Ninh', longitude: 106.07 },
+      { name: 'Từ Sơn', longitude: 105.96 },
+      { name: 'Thuận Thành', longitude: 106.10 },
+    ],
+  },
+  {
+    name: 'Bến Tre',
+    cities: [
+      { name: 'Bến Tre', longitude: 106.38 },
+    ],
+  },
+  {
+    name: 'Bình Định',
+    cities: [
+      { name: 'Quy Nhơn', longitude: 109.22 },
+      { name: 'An Nhơn', longitude: 109.11 },
+      { name: 'Hoài Nhơn', longitude: 109.02 },
+    ],
+  },
+  {
+    name: 'Bình Phước',
+    cities: [
+      { name: 'Đồng Xoài', longitude: 106.91 },
+      { name: 'Bình Long', longitude: 106.60 },
+      { name: 'Phước Long', longitude: 106.98 },
+    ],
+  },
+  {
+    name: 'Bình Thuận',
+    cities: [
+      { name: 'Phan Thiết', longitude: 108.10 },
+      { name: 'La Gi', longitude: 107.77 },
+    ],
+  },
+  {
+    name: 'Cà Mau',
+    cities: [
+      { name: 'Cà Mau', longitude: 105.15 },
+    ],
+  },
+  {
+    name: 'Cao Bằng',
+    cities: [
+      { name: 'Cao Bằng', longitude: 106.26 },
+    ],
+  },
+  {
+    name: 'Đắk Lắk',
+    cities: [
+      { name: 'Buôn Ma Thuột', longitude: 108.04 },
+      { name: 'Buôn Hồ', longitude: 108.27 },
+    ],
+  },
+  {
+    name: 'Đắk Nông',
+    cities: [
+      { name: 'Gia Nghĩa', longitude: 107.69 },
+    ],
+  },
+  {
+    name: 'Điện Biên',
+    cities: [
+      { name: 'Điện Biên Phủ', longitude: 103.02 },
+    ],
+  },
+  {
+    name: 'Đồng Tháp',
+    cities: [
+      { name: 'Cao Lãnh', longitude: 105.63 },
+      { name: 'Sa Đéc', longitude: 105.76 },
+      { name: 'Hồng Ngự', longitude: 105.34 },
+    ],
+  },
+  {
+    name: 'Gia Lai',
+    cities: [
+      { name: 'Pleiku', longitude: 108.00 },
+      { name: 'An Khê', longitude: 108.64 },
+      { name: 'Ayun Pa', longitude: 108.45 },
+    ],
+  },
+  {
+    name: 'Hà Giang',
+    cities: [
+      { name: 'Hà Giang', longitude: 104.98 },
+    ],
+  },
+  {
+    name: 'Hà Nam',
+    cities: [
+      { name: 'Phủ Lý', longitude: 105.91 },
+      { name: 'Duy Tiên', longitude: 105.95 },
+    ],
+  },
+  {
+    name: 'Hà Tĩnh',
+    cities: [
+      { name: 'Hà Tĩnh', longitude: 105.91 },
+      { name: 'Hồng Lĩnh', longitude: 105.71 },
+      { name: 'Kỳ Anh', longitude: 106.29 },
+    ],
+  },
+  {
+    name: 'Hải Dương',
+    cities: [
+      { name: 'Hải Dương', longitude: 106.32 },
+      { name: 'Chí Linh', longitude: 106.39 },
+      { name: 'Kinh Môn', longitude: 106.53 },
+    ],
+  },
+  {
+    name: 'Hậu Giang',
+    cities: [
+      { name: 'Vị Thanh', longitude: 105.47 },
+      { name: 'Ngã Bảy', longitude: 105.82 },
+    ],
+  },
+  {
+    name: 'Hòa Bình',
+    cities: [
+      { name: 'Hòa Bình', longitude: 105.34 },
+    ],
+  },
+  {
+    name: 'Hưng Yên',
+    cities: [
+      { name: 'Hưng Yên', longitude: 106.05 },
+      { name: 'Mỹ Hào', longitude: 106.08 },
+    ],
+  },
+  {
+    name: 'Kiên Giang',
+    cities: [
+      { name: 'Rạch Giá', longitude: 105.08 },
+      { name: 'Phú Quốc', longitude: 103.96 },
+      { name: 'Hà Tiên', longitude: 104.48 },
+    ],
+  },
+  {
+    name: 'Kon Tum',
+    cities: [
+      { name: 'Kon Tum', longitude: 108.01 },
+    ],
+  },
+  {
+    name: 'Lai Châu',
+    cities: [
+      { name: 'Lai Châu', longitude: 103.46 },
+    ],
+  },
+  {
+    name: 'Lạng Sơn',
+    cities: [
+      { name: 'Lạng Sơn', longitude: 106.76 },
+    ],
+  },
+  {
+    name: 'Lào Cai',
+    cities: [
+      { name: 'Lào Cai', longitude: 103.97 },
+      { name: 'Sa Pa', longitude: 103.84 },
+    ],
+  },
+  {
+    name: 'Nam Định',
+    cities: [
+      { name: 'Nam Định', longitude: 106.17 },
+    ],
+  },
+  {
+    name: 'Ninh Bình',
+    cities: [
+      { name: 'Ninh Bình', longitude: 105.98 },
+      { name: 'Tam Điệp', longitude: 105.90 },
+    ],
+  },
+  {
+    name: 'Ninh Thuận',
+    cities: [
+      { name: 'Phan Rang - Tháp Chàm', longitude: 108.99 },
+    ],
+  },
+  {
+    name: 'Phú Thọ',
+    cities: [
+      { name: 'Việt Trì', longitude: 105.37 },
+      { name: 'Phú Thọ', longitude: 105.22 },
+    ],
+  },
+  {
+    name: 'Phú Yên',
+    cities: [
+      { name: 'Tuy Hòa', longitude: 109.30 },
+      { name: 'Sông Cầu', longitude: 109.22 },
+      { name: 'Đông Hòa', longitude: 109.35 },
+    ],
+  },
+  {
+    name: 'Quảng Bình',
+    cities: [
+      { name: 'Đồng Hới', longitude: 106.62 },
+      { name: 'Ba Đồn', longitude: 106.42 },
+    ],
+  },
+  {
+    name: 'Quảng Nam',
+    cities: [
+      { name: 'Tam Kỳ', longitude: 108.47 },
+      { name: 'Hội An', longitude: 108.33 },
+      { name: 'Điện Bàn', longitude: 108.24 },
+    ],
+  },
+  {
+    name: 'Quảng Ngãi',
+    cities: [
+      { name: 'Quảng Ngãi', longitude: 108.80 },
+    ],
+  },
+  {
+    name: 'Quảng Trị',
+    cities: [
+      { name: 'Đông Hà', longitude: 107.10 },
+      { name: 'Quảng Trị', longitude: 107.19 },
+    ],
+  },
+  {
+    name: 'Sóc Trăng',
+    cities: [
+      { name: 'Sóc Trăng', longitude: 105.97 },
+    ],
+  },
+  {
+    name: 'Sơn La',
+    cities: [
+      { name: 'Sơn La', longitude: 103.91 },
+    ],
+  },
+  {
+    name: 'Tây Ninh',
+    cities: [
+      { name: 'Tây Ninh', longitude: 106.10 },
+      { name: 'Trảng Bàng', longitude: 106.37 },
+      { name: 'Hòa Thành', longitude: 106.14 },
+    ],
+  },
+  {
+    name: 'Thái Bình',
+    cities: [
+      { name: 'Thái Bình', longitude: 106.34 },
+    ],
+  },
+  {
+    name: 'Thái Nguyên',
+    cities: [
+      { name: 'Thái Nguyên', longitude: 105.84 },
+      { name: 'Sông Công', longitude: 105.85 },
+      { name: 'Phổ Yên', longitude: 105.87 },
+    ],
+  },
+  {
+    name: 'Tiền Giang',
+    cities: [
+      { name: 'Mỹ Tho', longitude: 106.36 },
+      { name: 'Gò Công', longitude: 106.66 },
+      { name: 'Cai Lậy', longitude: 106.12 },
+    ],
+  },
+  {
+    name: 'Trà Vinh',
+    cities: [
+      { name: 'Trà Vinh', longitude: 106.34 },
+      { name: 'Duyên Hải', longitude: 106.51 },
+    ],
+  },
+  {
+    name: 'Tuyên Quang',
+    cities: [
+      { name: 'Tuyên Quang', longitude: 105.22 },
+    ],
+  },
+  {
+    name: 'Vĩnh Long',
+    cities: [
+      { name: 'Vĩnh Long', longitude: 105.97 },
+      { name: 'Bình Minh', longitude: 105.82 },
+    ],
+  },
+  {
+    name: 'Vĩnh Phúc',
+    cities: [
+      { name: 'Vĩnh Yên', longitude: 105.60 },
+      { name: 'Phúc Yên', longitude: 105.73 },
+    ],
+  },
+  {
+    name: 'Yên Bái',
+    cities: [
+      { name: 'Yên Bái', longitude: 104.88 },
+      { name: 'Nghĩa Lộ', longitude: 104.51 },
+    ],
+  },
+];
+
+/**
+ * Kiểm tra xem tên tỉnh/thành có thuộc Việt Nam hay không
+ */
+export function isVietnamProvince(provinceName?: string): boolean {
+  if (!provinceName) return false;
+  const name = provinceName.trim();
+  return VIETNAM_PROVINCES.some(
+    p => p.name === name || name.includes(p.name) || p.name.includes(name),
+  );
+}
+
+/**
+ * Kinh tuyến trung tâm tính chân thái dương:
+ * - Việt Nam (GMT+7) dùng kinh tuyến 105°E
+ * - Trung Quốc (GMT+8) dùng kinh tuyến 120°E
+ */
+export function getMeridianForProvince(provinceName?: string): number {
+  return isVietnamProvince(provinceName) ? 105 : 120;
+}
+
+/**
+ * Trả về danh sách tỉnh thành phù hợp theo ngôn ngữ/quốc gia
+ */
+export function getProvincesByLocale(locale: string): ProvinceInfo[] {
+  return locale === 'vi' ? VIETNAM_PROVINCES : PROVINCES;
+}
