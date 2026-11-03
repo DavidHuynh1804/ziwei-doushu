@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { ZiweiChart } from '@/lib/ziwei/types';
-
+import { useLanguage } from '@/components/LanguageProvider';
 interface Message {
   role: 'user' | 'assistant';
   content: string;
@@ -12,7 +12,7 @@ interface ChatPanelProps {
   chart: ZiweiChart;
 }
 
-const PRESET_QUESTIONS = [
+const PRESET_QUESTIONS_ZH = [
   '我的整体命格如何？性格特点是什么？',
   '我的感情婚姻运势如何？',
   '我的事业财运如何？适合什么方向？',
@@ -21,11 +21,22 @@ const PRESET_QUESTIONS = [
   '今年的流年运势如何？',
 ];
 
+const PRESET_QUESTIONS_VI = [
+  'Tổng quan mệnh cách của tôi ra sao? Tính cách có điểm gì nổi bật?',
+  'Tình duyên và hôn nhân của tôi diễn biến như thế nào?',
+  'Sự nghiệp và tài vận thế nào? Tôi phù hợp định hướng gì?',
+  'Vận trình đại hạn 10 năm hiện tại của tôi ra sao?',
+  'Sức khỏe tật ách của tôi có điểm gì cần lưu ý?',
+  'Vận hạn lưu niên năm nay diễn biến như thế nào?',
+];
 export default function ChatPanel({ chart }: ChatPanelProps) {
+  const { locale } = useLanguage();
+  const isVi = locale === 'vi';
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const presetQuestions = isVi ? PRESET_QUESTIONS_VI : PRESET_QUESTIONS_ZH;
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -39,7 +50,6 @@ export default function ChatPanel({ chart }: ChatPanelProps) {
     setMessages(prev => [...prev, userMsg]);
     setInput('');
     setLoading(true);
-
     try {
       const res = await fetch('/api/interpret', {
         method: 'POST',
@@ -81,9 +91,14 @@ export default function ChatPanel({ chart }: ChatPanelProps) {
       }
     } catch (e) {
       const missing = e instanceof Error && e.message === 'api-missing';
+      const errorMsg = missing
+        ? (isVi
+            ? 'Phiên bản mã nguồn mở chưa kèm API luận giải AI (/api/interpret). Cần cấu hình API key trong mã nguồn theo hướng dẫn README. Quá trình an sao và xem lá số hoàn toàn không cần API key.'
+            : '开源版不含 AI 解读接口（/api/interpret），需要你自己实现后才能用，详见 README「快速开始」。排盘本身不需要任何 API Key。')
+        : (isVi ? 'Luận giải thất bại, vui lòng kiểm tra cấu hình API hoặc thử lại sau.' : '解读失败，请检查API配置或稍后重试。');
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: missing ? '开源版不含 AI 解读接口（/api/interpret），需要你自己实现后才能用，详见 README「快速开始」。排盘本身不需要任何 API Key。' : '解读失败，请检查API配置或稍后重试。',
+        content: errorMsg,
       }]);
     } finally {
       setLoading(false);
@@ -94,8 +109,12 @@ export default function ChatPanel({ chart }: ChatPanelProps) {
     <div className="flex flex-col h-full rounded-xl overflow-hidden card-glass">
       {/* 标题 */}
       <div className="px-4 py-3 flex-shrink-0" style={{ borderBottom: '1px solid var(--t-border)' }}>
-        <h3 className="text-xs font-medium tracking-widest" style={{ color: 'var(--t-gold)' }}>AI 命盘解读</h3>
-        <p className="text-[10px] mt-0.5" style={{ color: 'var(--t-faint)' }}>倪海厦正宗紫微斗数 · 智慧解析</p>
+        <h3 className="text-xs font-medium tracking-widest" style={{ color: 'var(--t-gold)' }}>
+          {isVi ? 'LUẬN GIẢI LÁ SỐ AI' : 'AI 命盘解读'}
+        </h3>
+        <p className="text-[10px] mt-0.5" style={{ color: 'var(--t-faint)' }}>
+          {isVi ? 'Tử Vi Đẩu Số Chính Tông Phái Nghê Hải Hạ · Luận Giải Thông Minh' : '倪海厦正宗紫微斗数 · 智慧解析'}
+        </p>
       </div>
 
       {/* 消息列表 */}
@@ -104,8 +123,17 @@ export default function ChatPanel({ chart }: ChatPanelProps) {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-8">
             <div className="text-4xl mb-3" style={{ color: 'var(--t-gold)', opacity: 0.15 }}>✦</div>
             <p className="text-xs leading-relaxed" style={{ color: 'var(--t-faint)' }}>
-              命盘已生成，可直接提问<br />
-              或从下方选择常见问题开始解读
+              {isVi ? (
+                <>
+                  Lá số đã sẵn sàng, hãy đặt câu hỏi<br />
+                  hoặc chọn câu hỏi mẫu bên dưới để bắt đầu luận giải
+                </>
+              ) : (
+                <>
+                  命盘已生成，可直接提问<br />
+                  或从下方选择常见问题开始解读
+                </>
+              )}
             </p>
           </motion.div>
         )}
@@ -131,7 +159,9 @@ export default function ChatPanel({ chart }: ChatPanelProps) {
                 }}
               >
                 {msg.role === 'assistant' && (
-                  <div className="text-[10px] mb-1" style={{ color: 'var(--t-faint)' }}>命理师 ·</div>
+                  <div className="text-[10px] mb-1" style={{ color: 'var(--t-faint)' }}>
+                    {isVi ? 'Chuyên gia Tử Vi ·' : '命理师 ·'}
+                  </div>
                 )}
                 <div className="whitespace-pre-wrap text-xs leading-relaxed">
                   {msg.content}
@@ -149,7 +179,7 @@ export default function ChatPanel({ chart }: ChatPanelProps) {
       {messages.length === 0 && (
         <div className="px-3 pb-2 flex-shrink-0">
           <div className="grid grid-cols-2 gap-1.5">
-            {PRESET_QUESTIONS.map((q, i) => (
+            {presetQuestions.map((q, i) => (
               <button
                 key={i}
                 onClick={() => sendMessage(q)}
@@ -184,7 +214,7 @@ export default function ChatPanel({ chart }: ChatPanelProps) {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage(input)}
-            placeholder="输入问题，如：我的感情运势如何？"
+            placeholder={isVi ? 'Nhập câu hỏi, ví dụ: Năm nay công việc tình duyên ra sao?' : '输入问题，如：我的感情运势如何？'}
             disabled={loading}
             className="flex-1 rounded-lg px-3 py-2 text-xs focus:outline-none transition-colors"
             style={{
@@ -203,7 +233,7 @@ export default function ChatPanel({ chart }: ChatPanelProps) {
               color: 'var(--t-gold)',
             }}
           >
-            解读
+            {loading ? '…' : (isVi ? 'Luận giải' : '解读')}
           </button>
         </div>
       </div>
