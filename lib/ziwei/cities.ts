@@ -1197,8 +1197,9 @@ export const VIETNAM_PROVINCES: ProvinceInfo[] = [
 export function isVietnamProvince(provinceName?: string): boolean {
   if (!provinceName) return false;
   const name = provinceName.trim();
+  if (!name) return false;
   return VIETNAM_PROVINCES.some(
-    p => p.name === name || name.includes(p.name) || p.name.includes(name),
+    p => p.name === name || (name.length >= 3 && p.name.includes(name)) || (p.name.length >= 3 && name.includes(p.name)),
   );
 }
 
