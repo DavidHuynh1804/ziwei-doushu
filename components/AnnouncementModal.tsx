@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useLanguage } from '@/components/LanguageProvider';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // 公告版本号——以后想再弹新公告，改这里就行（旧版 key 失效，新版重新弹一次）
@@ -11,6 +12,8 @@ export default function AnnouncementModal() {
   // 没看过 → 立即覆盖首页；看过 → 不再弹。
   const [open, setOpen] = useState(false);
   const [decided, setDecided] = useState(false); // hydration 完成标志
+  const { locale } = useLanguage();
+  const isVi = locale === 'vi';
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -85,14 +88,14 @@ export default function AnnouncementModal() {
               position: 'relative',
             }}>
               <div style={{ fontSize: '10px', letterSpacing: '0.4em', color: '#b8922a', opacity: 0.7, marginBottom: '6px' }}>
-                A LETTER TO USERS
+                {isVi ? 'THƯ GỬI NGƯỜI DÙNG' : 'A LETTER TO USERS'}
               </div>
               <h2 style={{ fontSize: '19px', fontWeight: 700, color: '#3d2f10', letterSpacing: '0.08em', margin: 0 }}>
-                致正在使用这个平台的你
+                {isVi ? 'Gửi bạn, người đang khám phá lá số của mình' : '致正在使用这个平台的你'}
               </h2>
               <button
                 onClick={close}
-                aria-label="关闭"
+                aria-label={isVi ? 'Đóng' : '关闭'}
                 style={{
                   position: 'absolute', top: '14px', right: '16px',
                   width: '28px', height: '28px',
@@ -117,12 +120,14 @@ export default function AnnouncementModal() {
               textAlign: 'center',
             }}>
               <div style={{ fontSize: '10px', letterSpacing: '0.3em', color: '#c45a2d', marginBottom: '4px', fontWeight: 600 }}>
-                LIMITED TIME · 限时回馈
+                {isVi ? 'TRẢI NGHIỆM MIỄN PHÍ · TỬ VI ĐẨU SỐ' : 'LIMITED TIME · 限时回馈'}
               </div>
               <div style={{ fontSize: '14px', color: '#8b3a1a', fontWeight: 600, lineHeight: 1.6 }}>
-                <span style={{ fontSize: '16px', color: '#c45a2d', fontWeight: 700 }}>5 月 1 日 — 5 月 8 日</span>
+                <span style={{ fontSize: '16px', color: '#c45a2d', fontWeight: 700 }}>
+                  {isVi ? 'Hệ Thống Mở Hoàn Toàn Miễn Phí' : '5 月 1 日 — 5 月 8 日'}
+                </span>
                 <br />
-                平台全部功能 + AI 提问 全部免费开放
+                {isVi ? 'Toàn bộ tính năng an sao lá số + AI hỏi đáp mở rộng' : '平台全部功能 + AI 提问 全部免费开放'}
               </div>
             </div>
 
@@ -135,41 +140,77 @@ export default function AnnouncementModal() {
               color: '#5a4a30',
               flex: 1,
             }}>
-              <p style={{ margin: '0 0 12px' }}>
-                说实话，我真的没想到会有这么大的流量。
-              </p>
-              <p style={{ margin: '0 0 12px' }}>
-                最开始做这个平台，我的初心其实很简单：在 AI 时代，把倪师这套原本复杂、门槛很高的体系，尽量做得更简单、更高效、更容易理解。
-              </p>
-              <p style={{ margin: '0 0 12px' }}>
-                不一定每个人都要先学很久、看很多书，才能接触这些内容。我们希望通过这个平台，让大家用更轻松的方式，获得一些对自我、人生阶段、选择方向的参考和启发。
-              </p>
-              <p style={{
-                margin: '0 0 12px',
-                padding: '10px 14px',
-                background: 'rgba(184,146,42,0.07)',
-                borderLeft: '3px solid rgba(184,146,42,0.45)',
-                borderRadius: '0 8px 8px 0',
-                fontStyle: 'italic',
-                color: '#7a5e2a',
-              }}>
-                倪师曾说过一句话：人怎么可能发明出完全没有用的东西呢？
-              </p>
-              <p style={{ margin: '0 0 12px' }}>
-                我一直觉得，易经如此，紫微斗数也是如此。它们真正有价值的地方，不是让人被某个结果困住，而是让我们更早看见自己的性格惯性、人生课题和选择方向。看见之后，才有机会调整；理解之后，才有机会变得更好。
-              </p>
-              <p style={{ margin: '0 0 12px' }}>
-                至于那些说&ldquo;你当下在看这些，其实也是命运的一部分&rdquo;之类的话，我就不多评价了。
-              </p>
-              <p style={{ margin: '0 0 12px' }}>
-                这几天账号被小红书抬走了，<strong style={{ color: '#c45a2d' }}>5 月 3 号开始恢复正常更新。</strong>
-              </p>
-              <p style={{ margin: '0 0 16px', color: '#3d2f10', fontWeight: 500 }}>
-                最后，真心祝愿大家都能越来越了解自己，越来越爱自己，也越来越有能力爱身边的人。
-              </p>
-              <p style={{ margin: 0, textAlign: 'right', fontSize: '13px', color: '#7a5e2a' }}>
-                ——谢谢大家 🙏
-              </p>
+              {isVi ? (
+                <>
+                  <p style={{ margin: '0 0 12px' }}>
+                    Chào mừng bạn đến với công cụ Tử Vi Đẩu Số theo hệ thống chính tông của thầy Nghê Hải Hạ.
+                  </p>
+                  <p style={{ margin: '0 0 12px' }}>
+                    Tâm nguyện ban đầu của chúng tôi rất giản dị: trong kỷ nguyên công nghệ số, đem hệ thống học thuật Tử Vi vốn thâm sâu, uyên bác và nhiều rào cản này trở nên đơn giản, hiệu quả và dễ tiếp cận hơn với tất cả mọi người.
+                  </p>
+                  <p style={{ margin: '0 0 12px' }}>
+                    Không nhất thiết ai cũng phải đọc hàng chục cuốn cổ thư trước khi tự hiểu lá số của mình. Chúng tôi hy vọng qua nền tảng này, bạn có thể tìm thấy những góc nhìn sáng rõ về khí chất nội tại, quy luật vận trình và những ngã rẽ cuộc đời.
+                  </p>
+                  <p style={{
+                    margin: '0 0 12px',
+                    padding: '10px 14px',
+                    background: 'rgba(184,146,42,0.07)',
+                    borderLeft: '3px solid rgba(184,146,42,0.45)',
+                    borderRadius: '0 8px 8px 0',
+                    fontStyle: 'italic',
+                    color: '#7a5e2a',
+                  }}>
+                    Nghê Sư từng nói: &ldquo;Con người làm sao có thể sáng tạo ra thứ hoàn toàn vô dụng?&rdquo;
+                  </p>
+                  <p style={{ margin: '0 0 12px' }}>
+                    Kinh Dịch hay Tử Vi Đẩu Số cũng vậy. Giá trị chân chính của thuật số không phải để ta cam chịu trước số phận, mà là để sớm nhận diện quán tính tính cách, những thử thách và cơ hội của đời mình. Nhìn rõ mới có thể chuyển hóa; hiểu mình mới có thể làm chủ tương lai.
+                  </p>
+                  <p style={{ margin: '0 0 16px', color: '#3d2f10', fontWeight: 500 }}>
+                    Chúc bạn ngày càng thấu hiểu chính mình, bao dung với bản thân và có thêm trí tuệ để yêu thương những người xung quanh.
+                  </p>
+                  <p style={{ margin: 0, textAlign: 'right', fontSize: '13px', color: '#7a5e2a' }}>
+                    —— Chân thành cảm ơn bạn 🙏
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p style={{ margin: '0 0 12px' }}>
+                    说实话，我真的没想到会有这么大的流量。
+                  </p>
+                  <p style={{ margin: '0 0 12px' }}>
+                    最开始做这个平台，我的初心其实很简单：在 AI 时代，把倪师这套原本复杂、门槛很高的体系，尽量做得更简单、更高效、更容易理解。
+                  </p>
+                  <p style={{ margin: '0 0 12px' }}>
+                    不一定每个人都要先学很久、看很多书，才能接触这些内容。我们希望通过这个平台，让大家用更轻松的方式，获得一些对自我、人生阶段、选择方向的参考和启发。
+                  </p>
+                  <p style={{
+                    margin: '0 0 12px',
+                    padding: '10px 14px',
+                    background: 'rgba(184,146,42,0.07)',
+                    borderLeft: '3px solid rgba(184,146,42,0.45)',
+                    borderRadius: '0 8px 8px 0',
+                    fontStyle: 'italic',
+                    color: '#7a5e2a',
+                  }}>
+                    倪师曾说过一句话：人怎么可能发明出完全没有用的东西呢？
+                  </p>
+                  <p style={{ margin: '0 0 12px' }}>
+                    我一直觉得，易经如此，紫微斗数也是如此。它们真正有价值的地方，不是让人被某个结果困住，而是让我们更早看见自己的性格惯性、人生课题和选择方向。看见之后，才有机会调整；理解之后，才有机会变得更好。
+                  </p>
+                  <p style={{ margin: '0 0 12px' }}>
+                    至于那些说&ldquo;你当下在看这些，其实也是命运的一部分&rdquo;之类的话，我就不多评价了。
+                  </p>
+                  <p style={{ margin: '0 0 12px' }}>
+                    这几天账号被小红书抬走了，<strong style={{ color: '#c45a2d' }}>5 月 3 号开始恢复正常更新。</strong>
+                  </p>
+                  <p style={{ margin: '0 0 16px', color: '#3d2f10', fontWeight: 500 }}>
+                    最后，真心祝愿大家都能越来越了解自己，越来越爱自己，也越来越有能力爱身边的人。
+                  </p>
+                  <p style={{ margin: 0, textAlign: 'right', fontSize: '13px', color: '#7a5e2a' }}>
+                    ——谢谢大家 🙏
+                  </p>
+                </>
+              )}
             </div>
 
             {/* 底部按钮 */}
@@ -197,7 +238,7 @@ export default function AnnouncementModal() {
                   boxShadow: '0 4px 12px rgba(184,146,42,0.3)',
                 }}
               >
-                我知道了
+                {isVi ? 'Tôi Đã Hiểu' : '我知道了'}
               </button>
             </div>
           </motion.div>
