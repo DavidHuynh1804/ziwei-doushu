@@ -1,8 +1,8 @@
 'use client';
 import { motion } from 'framer-motion';
-import { STEMS, SI_HUA_TABLE } from '@/lib/ziwei/constants';
+import { STEMS, BRANCHES, SI_HUA_TABLE } from '@/lib/ziwei/constants';
 import type { ZiweiChart } from '@/lib/ziwei/types';
-
+import { useLanguage } from '@/components/LanguageProvider';
 export type TimeView = 'mingpan' | 'daxian' | 'liunian';
 
 interface TimeNavProps {
@@ -44,10 +44,12 @@ export default function TimeNav({
   onViewChange,
   onYearChange,
 }: TimeNavProps) {
+  const { locale, tStem, tBranch, tStar, tSiHua } = useLanguage();
+  const isVi = locale === 'vi';
   const currentDx = chart.daXians[chart.currentDaXianIndex];
 
   // 计算当前叠加四化信息
-  const getOverlayInfo = (): { stemName: string; overlay: Record<string, string> } | null => {
+  const getOverlayInfo = (): { stemName: string; stemIndex: number; overlay: Record<string, string> } | null => {
     if (view === 'mingpan') return null;
 
     if (view === 'daxian' && currentDx) {
@@ -56,6 +58,7 @@ export default function TimeNav({
       const stemIndex = dxPalace.stem;
       return {
         stemName: STEMS[stemIndex],
+        stemIndex,
         overlay: buildSiHuaOverlay(stemIndex),
       };
     }
@@ -64,6 +67,7 @@ export default function TimeNav({
       const stemIndex = getYearStemIndex(liunianYear);
       return {
         stemName: STEMS[stemIndex],
+        stemIndex,
         overlay: buildSiHuaOverlay(stemIndex),
       };
     }
@@ -72,6 +76,12 @@ export default function TimeNav({
   };
 
   const overlayInfo = getOverlayInfo();
+  const liunianStemIdx = getYearStemIndex(liunianYear);
+  const liunianBranchIdx = ((liunianYear - 4) % 12 + 12) % 12;
+  const liunianGanzhi = isVi
+    ? `${tStem(liunianStemIdx)} ${tBranch(liunianBranchIdx)}`
+    : `${STEMS[liunianStemIdx]}${BRANCHES[liunianBranchIdx]}`;
+  const nominalAge = liunianYear - chart.birthInfo.year + 1;
 
   return (
     <div className="mb-3">
@@ -85,7 +95,7 @@ export default function TimeNav({
           active={view === 'mingpan'}
           onClick={() => onViewChange('mingpan')}
         >
-          本命
+          {isVi ? 'Bản Mệnh' : '本命'}
         </TabButton>
 
         {/* 大限 */}
@@ -93,7 +103,9 @@ export default function TimeNav({
           active={view === 'daxian'}
           onClick={() => onViewChange('daxian')}
         >
-          {currentDx ? `大限 ${currentDx.startAge}–${currentDx.endAge}` : '大限'}
+          {currentDx
+            ? (isVi ? `Đại Hạn ${currentDx.startAge}–${currentDx.endAge}t` : `大限 ${currentDx.startAge}–${currentDx.endAge}`)
+            : (isVi ? 'Đại Hạn' : '大限')}
         </TabButton>
 
         {/* 流年 — 含年份切换 */}
@@ -110,10 +122,10 @@ export default function TimeNav({
         >
           <button
             onClick={() => onViewChange('liunian')}
-            className="text-[10px] font-medium flex-1 text-center"
+            className="text-[10px] font-medium flex-1 text-center truncate px-1"
             style={{ color: view === 'liunian' ? 'var(--t-gold)' : 'var(--t-faint)' }}
           >
-            流年
+            {isVi ? `Lưu Niên (${liunianGanzhi}${nominalAge > 0 ? ` · ${nominalAge}t` : ''})` : '流年'}
           </button>
           {/* 年份 +/- */}
           <div className="flex items-center gap-0.5">
@@ -151,14 +163,17 @@ export default function TimeNav({
           className="flex items-center gap-2 mt-1.5 px-1 flex-wrap"
         >
           <span className="text-[9px]" style={{ color: 'var(--t-faint)' }}>
-            {view === 'daxian' ? '大限' : `${liunianYear}`}·{overlayInfo.stemName}年四化：
+            {view === 'daxian'
+              ? (isVi ? 'Tứ Hóa Đại Hạn' : '大限')
+              : (isVi ? `Tứ Hóa Lưu Niên ${liunianYear} (${isVi ? tStem(overlayInfo.stemIndex) : overlayInfo.stemName})` : `${liunianYear}·${overlayInfo.stemName}年四化`)}
+            :
           </span>
           {(['禄', '权', '科', '忌'] as const).map(sh => {
             const starName = Object.keys(overlayInfo.overlay).find(k => overlayInfo.overlay[k] === sh);
             if (!starName) return null;
             return (
               <span key={sh} className="text-[9px] font-medium" style={{ color: SIHUA_COLORS[sh] }}>
-                {starName}化{sh}
+                {isVi ? `${tStar(starName)} Hóa ${tSiHua(sh)}` : `${starName}化${sh}`}
               </span>
             );
           })}
