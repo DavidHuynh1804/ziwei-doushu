@@ -7,19 +7,19 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SITE_URL } from '@/lib/site';
 
 export const metadata: Metadata = {
-  title: '紫微命盘 · 倪海厦正宗紫微斗数',
-  description: '基于倪海厦正宗紫微斗数体系，AI深度解读您的命盘格局、大限流年、感情事业财富健康全方位解析',
-  keywords: '紫微斗数, 倪海厦, 紫微斗数全集, 紫微斗数全书, 骨髓赋, 命盘, 命理, 14主星, 12宫位',
+  title: 'Tử Vi Đẩu Số · Lập Lá Số & Luận Giải Chính Tông Nghê Hải Hạ | Ziwei Master',
+  description: 'Dựa trên hệ thống Tử Vi Đẩu Số chính tông của thầy Nghê Hải Hạ, AI phân tích chuyên sâu lá số mệnh bàn, đại hạn lưu niên, tình cảm sự nghiệp tài vận sức khỏe toàn diện.',
+  keywords: 'Tử Vi Đẩu Số, Tử Vi, Lập Lá Số Tử Vi, Luận Giải Tử Vi, Nghê Hải Hạ, 14 Chính Tinh, 12 Cung Vị, Lá số tử vi, Tử Vi Đẩu Số Toàn Thư, Cốt Tủy Phú, 紫微斗数, 倪海厦, 紫微斗数全集, 紫微斗数全书, 骨髓赋, 命盘, 命理, 14主星, 12宫位',
   metadataBase: new URL(SITE_URL),
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: '紫微命盘 · 倪海厦正宗紫微斗数',
-    description: '基于倪海厦正宗紫微斗数体系，AI深度解读您的命盘格局、大限流年、感情事业财富健康全方位解析',
+    title: 'Tử Vi Đẩu Số · Lập Lá Số & Luận Giải Chính Tông Nghê Hải Hạ | Ziwei Master',
+    description: 'Dựa trên hệ thống Tử Vi Đẩu Số chính tông của thầy Nghê Hải Hạ, AI phân tích chuyên sâu lá số mệnh bàn, đại hạn lưu niên, tình cảm sự nghiệp tài vận sức khỏe toàn diện.',
     url: SITE_URL,
-    siteName: '紫微研究',
-    locale: 'zh_CN',
+    siteName: 'Tử Vi Đẩu Số · Ziwei Master',
+    locale: 'vi_VN',
     type: 'website',
   },
   // 站长平台验证（拿到 verification code 后填入对应字段，重新部署即可）
