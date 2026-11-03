@@ -33,7 +33,7 @@ export function formToBirthInfo(form: BirthFormState): BirthInfo {
   // 晚子时换日按真太阳时判定，与时辰支同一口径（见 true-solar-time.ts 的 resolveZiweiDayOffset）。
   // 只看钟表 23 点会和经度校正后的时辰错位：东经 100° 钟表 23:30 是真太阳时 22:10 亥时，不该换日。
   if (!form.unknownTime) {
-    const meridian = (isVietnamProvince(form.province) || (form.longitude >= 102 && form.longitude <= 111)) ? 105 : 120;
+    const meridian = (isVietnamProvince(form.province) || (!form.province && form.longitude >= 102 && form.longitude <= 111)) ? 105 : 120;
     const solar = (parseInt(form.clockHour) || 0) * 60 + (parseInt(form.clockMinute) || 0) + (form.longitude - meridian) * 4;
     const normalizedMinutes = ((solar % 1440) + 1440) % 1440;
     hour = branchFromSolarMinutes(normalizedMinutes);

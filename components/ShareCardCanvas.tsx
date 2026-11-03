@@ -133,7 +133,7 @@ export default function ShareCardCanvas({ chart, birth, highlight }: ShareCardPr
               {personName ? <span style={{ marginLeft: '8px', fontSize: '13px', fontWeight: 600, color: '#8b6a14' }}>· {personName}</span> : null}
             </div>
             <div style={{ fontSize: '8.5px', color: '#a89b7c', letterSpacing: isVi ? '0.06em' : '0.18em', marginTop: '1px' }}>
-              {isVi ? 'Chính Tông Nghê Hải Hà · TỬ VI ĐẨU SỐ' : '倪海厦正宗 · ZI WEI'}
+              {isVi ? 'Chính Tông Nghê Hải Hạ · TỬ VI ĐẨU SỐ' : '倪海厦正宗 · ZI WEI'}
             </div>
           </div>
         </div>
@@ -384,7 +384,7 @@ export default function ShareCardCanvas({ chart, birth, highlight }: ShareCardPr
                 {isVi ? 'Tử Vi làm cửa · Thiên Địa Nhân làm đường' : '紫微为门 · 天地人为路'}
               </div>
               <div style={{ fontSize: '9px', color: '#8b6a14', fontWeight: 600, letterSpacing: isVi ? '0.03em' : '0.08em', lineHeight: 1.35, marginTop: '2px' }}>
-                {isVi ? 'Thuật toán chính tông Nghê Hải Hà · Khám phá vận mệnh' : '倪海厦为师 · AI 答疑伴学'}
+                {isVi ? 'Thuật toán chính tông Nghê Hải Hạ · Khám phá vận mệnh' : '倪海厦为师 · AI 答疑伴学'}
               </div>
               <div style={{ fontSize: '8px', color: '#a89b7c', letterSpacing: isVi ? '0.04em' : '0.15em', marginTop: '3px' }}>
                 {isVi ? 'Tra cứu & an lá số Tử Vi chuẩn mực →' : '扫码起你的命盘 →'}

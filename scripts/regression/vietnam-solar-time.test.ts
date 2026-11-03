@@ -158,4 +158,21 @@ assert.equal(birthHanoi.month, 5);
 assert.equal(birthHanoi.day, 15, 'Hà Nội 22:50 bù +3.4 phút chưa tới 23:00, giữ nguyên ngày 15');
 assert.equal(birthHanoi.hour, 11, 'Vẫn là giờ Hợi (11)');
 
+// Kiểm tra thành phố Trung Quốc có kinh độ trong dải 102°E–111°E (vd: Tứ Xuyên / Thành Đô 104.06°E) vẫn dùng kinh tuyến 120°E
+const birthChengdu = formToBirthInfo({
+  name: 'Trương Tam',
+  year: '2024',
+  month: '5',
+  day: '15',
+  clockHour: '23',
+  clockMinute: '30',
+  unknownTime: false,
+  province: '四川省',
+  city: '成都',
+  longitude: 104.06,
+  gender: 'male',
+});
+assert.equal(birthChengdu.day, 15, 'Thành Đô 23:30 bù -63.76 phút theo kinh tuyến 120°E phải ở ngày 15');
+assert.equal(birthChengdu.hour, 11, 'Thành Đô 23:30 phải là giờ Hợi (11)');
+
 console.log('✅ Vietnam solar time regression tests passed successfully!');
