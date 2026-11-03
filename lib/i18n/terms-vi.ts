@@ -81,8 +81,10 @@ export const MINOR_STARS_VI: Record<string, string> = {
   '截空': 'Triệt Không',
   '旬中': 'Tuần Trung',
   '旬空': 'Tuần Không',
+  '副旬': 'Phó Tuần',
   '空亡': 'Không Vong',
   '截路': 'Triệt Lộ',
+  '副截': 'Phó Triệt',
   '月德': 'Nguyệt Đức',
   '天伤': 'Thiên Thương',
   '天使': 'Thiên Sứ',
@@ -94,7 +96,7 @@ export const MINOR_STARS_VI: Record<string, string> = {
 
   // 12 Thần Trường Sinh
   '长生': 'Trường Sinh',
-  '沐浴': 'Mục Dục',
+  '沐浴': 'Mộc Dục',
   '冠带': 'Quan Đới',
   '临官': 'Lâm Quan',
   '帝旺': 'Đế Vượng',
@@ -107,8 +109,8 @@ export const MINOR_STARS_VI: Record<string, string> = {
   '养': 'Dưỡng',
 
   // 12 Thần Bác Sĩ
-  '博士': 'Bác Sỹ',
-  '力士': 'Lực Sỹ',
+  '博士': 'Bác Sĩ',
+  '力士': 'Lực Sĩ',
   '青龙': 'Thanh Long',
   '将军': 'Tướng Quân',
   '奏书': 'Tấu Thư',
@@ -250,6 +252,8 @@ export const BRIGHTNESS_VI: Record<string, string> = {
   '平': 'Bình',
   '不': 'Bất',
   '陷': 'Hãm',
+  '闲': 'Nhàn',
+  '地': 'Địa',
   'bright': 'Miếu Vượng',
   'normal': 'Bình Hòa',
   'dim': 'Hãm Địa',

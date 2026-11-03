@@ -141,6 +141,8 @@ const brightnesses = [
   ['平', 'Bình'],
   ['不', 'Bất'],
   ['陷', 'Hãm'],
+  ['闲', 'Nhàn'],
+  ['地', 'Địa'],
   ['bright', 'Miếu Vượng'],
   ['normal', 'Bình Hòa'],
   ['dim', 'Hãm Địa'],
@@ -186,7 +188,7 @@ const otherStars = [
   ['帝旺', 'Đế Vượng'],
   ['墓', 'Mộ'],
   ['绝', 'Tuyệt'],
-  ['博士', 'Bác Sỹ'],
+  ['博士', 'Bác Sĩ'],
   ['青龙', 'Thanh Long'],
 ];
 

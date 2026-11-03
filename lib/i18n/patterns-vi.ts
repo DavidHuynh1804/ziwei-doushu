@@ -22,7 +22,7 @@ export const PATTERNS_VI: Record<string, PatternTranslation> = {
   },
   '武贪格': {
     name: 'Vũ Tham Cách',
-    description: 'Vũ Khúc cùng Tham Lang hội hợp cung Mệnh, tài tinh kết hợp cùng đào hoa dục vọng chi tinh. Cổ thư nói "Vũ Tham bất phát thiếu niên nhân" – trước ba mươi tuổi bôn ba tích lũy, sau ba mtuổi mới phát phúc đại phú. Thích hợp kinh doanh tài chính, đầu tư, bán hàng, giải trí.',
+    description: 'Vũ Khúc cùng Tham Lang hội hợp cung Mệnh, tài tinh kết hợp cùng đào hoa dục vọng chi tinh. Cổ thư nói "Vũ Tham bất phát thiếu niên nhân" – trước ba mươi tuổi bôn ba tích lũy, sau ba mươi tuổi mới phát phúc đại phú. Thích hợp kinh doanh tài chính, đầu tư, bán hàng, giải trí.',
   },
   '杀破狼': {
     name: 'Sát Phá Tham',

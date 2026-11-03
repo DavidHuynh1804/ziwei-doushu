@@ -13,6 +13,7 @@ import {
 } from './terms-vi';
 import { UI_VI } from './ui-vi';
 import { PATTERNS_VI } from './patterns-vi';
+import { STEMS, BRANCHES, JU_NAMES } from '@/lib/ziwei/constants';
 
 export * from './types';
 export * from './terms-vi';
@@ -43,7 +44,6 @@ export function tPalace(name: string, locale: Locale = DEFAULT_LOCALE): string {
 export function tStem(stem: string | number, locale: Locale = DEFAULT_LOCALE): string {
   if (typeof stem === 'number') {
     if (locale === 'zh') {
-      const STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
       return STEMS[stem] ?? String(stem);
     }
     return STEM_INDEX_VI[stem] ?? String(stem);
@@ -58,7 +58,6 @@ export function tStem(stem: string | number, locale: Locale = DEFAULT_LOCALE): s
 export function tBranch(branch: string | number, locale: Locale = DEFAULT_LOCALE): string {
   if (typeof branch === 'number') {
     if (locale === 'zh') {
-      const BRANCHES = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
       return BRANCHES[branch] ?? String(branch);
     }
     return BRANCH_INDEX_VI[branch] ?? String(branch);
@@ -90,9 +89,6 @@ export function tSiHua(sihua: string, locale: Locale = DEFAULT_LOCALE): string {
 export function tWuxingJu(ju: string | number, locale: Locale = DEFAULT_LOCALE): string {
   if (typeof ju === 'number') {
     if (locale === 'zh') {
-      const JU_NAMES: Record<number, string> = {
-        2: '水二局', 3: '木三局', 4: '金四局', 5: '土五局', 6: '火六局'
-      };
       return JU_NAMES[ju] ?? String(ju);
     }
     return WUXING_JU_NUM_VI[ju] ?? String(ju);
