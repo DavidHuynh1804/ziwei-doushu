@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/components/LanguageProvider';
 
 interface ScrollIntroProps {
   onComplete: () => void;
@@ -10,7 +11,10 @@ interface ScrollIntroProps {
 
 const BEIDOU = ['天枢', '天璇', '天玑', '天权', '玉衡', '开阳', '摇光'];
 
-export default function ScrollIntro({ onComplete, skipLabel = '跳 过' }: ScrollIntroProps) {
+export default function ScrollIntro({ onComplete, skipLabel }: ScrollIntroProps) {
+  const { locale } = useLanguage();
+  const isVi = locale === 'vi';
+  const resolvedSkipLabel = skipLabel ?? (isVi ? 'Bỏ qua' : '跳 过');
   // visible：整个 intro 是否在显示
   // unrolled：卷轴是否已展开（控制内容浮现）
   const [visible, setVisible] = useState(true);
@@ -159,7 +163,7 @@ export default function ScrollIntro({ onComplete, skipLabel = '跳 过' }: Scrol
                   textShadow: '0 1px 0 rgba(255,250,235,0.3)',
                   whiteSpace: 'nowrap',
                 }}>
-                  紫微命盘
+                  {isVi ? 'TỬ VI ĐẨU SỐ' : '紫微命盘'}
                 </h1>
 
                 {/* 副标 楷体 */}
@@ -172,7 +176,7 @@ export default function ScrollIntro({ onComplete, skipLabel = '跳 过' }: Scrol
                   marginBottom: '6px',
                   whiteSpace: 'nowrap',
                 }}>
-                  观 天 之 象 · 察 人 之 命
+                  {isVi ? 'QUAN THIÊN CHI TƯỢNG · SÁT NHÂN CHI MỆNH' : '观 天 之 象 · 察 人 之 命'}
                 </div>
                 <div style={{
                   fontSize: 'clamp(11px, 1.2vw, 14px)',
@@ -182,7 +186,7 @@ export default function ScrollIntro({ onComplete, skipLabel = '跳 过' }: Scrol
                   whiteSpace: 'nowrap',
                   opacity: 0.85,
                 }}>
-                  倪海厦《天纪》正宗体系
+                  {isVi ? 'Hệ thống chính tông Nghê Hải Hạ «Thiên Kỷ»' : '倪海厦《天纪》正宗体系'}
                 </div>
 
                 {/* 朱砂方印 */}
@@ -310,7 +314,7 @@ export default function ScrollIntro({ onComplete, skipLabel = '跳 过' }: Scrol
               e.currentTarget.style.color = 'rgba(232,220,196,0.55)';
             }}
           >
-            {skipLabel} →
+            {resolvedSkipLabel} →
           </button>
         </motion.div>
       )}

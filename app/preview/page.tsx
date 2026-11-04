@@ -3,12 +3,16 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ScrollIntro from '@/components/ScrollIntro';
+import { useLanguage } from '@/components/LanguageProvider';
+import LanguageToggle from '@/components/LanguageToggle';
 
 export default function PreviewPage() {
   const router = useRouter();
   // replayKey 用于强制重置 ScrollIntro（用户点"再播放一次"时）
   const [replayKey, setReplayKey] = useState(0);
   const [done, setDone] = useState(false);
+  const { locale } = useLanguage();
+  const isVi = locale === 'vi';
 
   return (
     <>
@@ -27,8 +31,11 @@ export default function PreviewPage() {
           fontFamily: '"STSong", "Songti SC", serif',
           textAlign: 'center',
         }}>
-          <div style={{ fontSize: '11px', letterSpacing: '0.4em', color: '#c89647', marginBottom: '16px' }}>
-            SCROLL · INTRO · PREVIEW
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '16px' }}>
+            <div style={{ fontSize: '11px', letterSpacing: '0.4em', color: '#c89647' }}>
+              SCROLL · INTRO · PREVIEW
+            </div>
+            <LanguageToggle compact />
           </div>
           <h1 style={{
             fontSize: 'clamp(28px, 3.5vw, 40px)',
@@ -37,7 +44,7 @@ export default function PreviewPage() {
             marginBottom: '16px',
             fontWeight: 600,
           }}>
-            紫微卷轴 · 开场预览
+            {isVi ? 'Cuộn Giấy Tử Vi · Xem Trước Mở Màn' : '紫微卷轴 · 开场预览'}
           </h1>
           <p style={{
             fontSize: '14px', color: '#a89878',
@@ -46,8 +53,17 @@ export default function PreviewPage() {
             marginBottom: '40px',
             fontFamily: '"STKaiti", "Kaiti SC", serif',
           }}>
-            刚才看到的卷轴效果会在每次进入主页时缓缓铺开。<br />
-            如果满意，告诉我，我把它接到主页 / 上线。
+            {isVi ? (
+              <>
+                Hiệu ứng cuộn tranh thư pháp mở ra khi truy cập trang chủ.<br />
+                Tái hiện phong vị cổ điển kết hợp trải nghiệm số hóa hiện đại.
+              </>
+            ) : (
+              <>
+                刚才看到的卷轴效果会在每次进入主页时缓缓铺开。<br />
+                如果满意，告诉我，我把它接到主页 / 上线。
+              </>
+            )}
           </p>
 
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '24px' }}>
@@ -65,7 +81,7 @@ export default function PreviewPage() {
                 fontWeight: 600,
               }}
             >
-              再 播 放 一 次
+              {isVi ? 'PHÁT LẠI MỘT LẦN NỮA' : '再 播 放 一 次'}
             </button>
             <button
               onClick={() => router.push('/')}
@@ -80,7 +96,7 @@ export default function PreviewPage() {
                 cursor: 'pointer',
               }}
             >
-              进 入 原 版 首 页
+              {isVi ? 'VÀO TRANG CHỦ' : '进 入 原 版 首 页'}
             </button>
           </div>
 
@@ -89,11 +105,11 @@ export default function PreviewPage() {
             letterSpacing: '0.15em',
             display: 'flex', gap: '20px',
           }}>
-            <Link href="/" style={{ color: 'inherit', textDecoration: 'none' }}>原版 ↗</Link>
+            <Link href="/" style={{ color: 'inherit', textDecoration: 'none' }}>{isVi ? 'Trang chủ ↗' : '原版 ↗'}</Link>
             <span>·</span>
-            <Link href="/chart" style={{ color: 'inherit', textDecoration: 'none' }}>命盘</Link>
+            <Link href="/chart" style={{ color: 'inherit', textDecoration: 'none' }}>{isVi ? 'Lập lá số' : '命盘'}</Link>
             <span>·</span>
-            <Link href="/heming" style={{ color: 'inherit', textDecoration: 'none' }}>合盘</Link>
+            <Link href="/heming" style={{ color: 'inherit', textDecoration: 'none' }}>{isVi ? 'Hợp mệnh' : '合盘'}</Link>
           </div>
 
           {/* 时间轴说明 */}
@@ -109,13 +125,15 @@ export default function PreviewPage() {
             fontFamily: '"STKaiti", serif',
             textAlign: 'left',
           }}>
-            <div style={{ color: '#c89647', marginBottom: '12px', letterSpacing: '0.2em', fontSize: '11px' }}>动画时间轴</div>
-            <div>· 0.0 ~ 1.7 s &nbsp;&nbsp;卷轴从中央向两侧展开</div>
-            <div>· 1.9 ~ 2.7 s &nbsp;&nbsp;宣纸内容浮现（标题 + 副标 + 朱砂印）</div>
-            <div>· 2.7 ~ 3.5 s &nbsp;&nbsp;停留欣赏</div>
-            <div>· 3.5 ~ 4.2 s &nbsp;&nbsp;整体淡出，进入主页</div>
+            <div style={{ color: '#c89647', marginBottom: '12px', letterSpacing: '0.2em', fontSize: '11px' }}>
+              {isVi ? 'DÒNG THỜI GIAN HIỆU ỨNG' : '动画时间轴'}
+            </div>
+            <div>{isVi ? '· 0.0 ~ 1.7 s   Trục cuộn từ trung tâm mở rộng sang hai phía' : '· 0.0 ~ 1.7 s   卷轴从中央向两侧展开'}</div>
+            <div>{isVi ? '· 1.9 ~ 2.7 s   Nội dung thư pháp hiển thị (Tiêu đề + Chu sa ấn)' : '· 1.9 ~ 2.7 s   宣纸内容浮现（标题 + 副标 + 朱砂印）'}</div>
+            <div>{isVi ? '· 2.7 ~ 3.5 s   Dừng lại thưởng lãm nét mực' : '· 2.7 ~ 3.5 s   停留欣赏'}</div>
+            <div>{isVi ? '· 3.5 ~ 4.2 s   Toàn bộ mờ dần chuyển tiếp vào trang chủ' : '· 3.5 ~ 4.2 s   整体淡出，进入主页'}</div>
             <div style={{ marginTop: '12px', color: '#6e6048', fontSize: '11px' }}>
-              用户随时可点右下「跳过」直接进入主页。
+              {isVi ? 'Người dùng có thể nhấn nút "Bỏ qua" ở góc dưới bên phải bất cứ lúc nào.' : '用户随时可点右下「跳过」直接进入主页。'}
             </div>
           </div>
         </main>
