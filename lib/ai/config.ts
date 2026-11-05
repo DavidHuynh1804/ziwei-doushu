@@ -23,7 +23,7 @@ export const DEFAULT_PROVIDERS: Record<string, { baseURL: string; defaultModel: 
   },
   groq: {
     baseURL: 'https://api.groq.com/openai/v1',
-    defaultModel: 'llama-3.3-70b-versatile',
+    defaultModel: 'qwen/qwen3.8-27b',
   },
   openrouter: {
     baseURL: 'https://openrouter.ai/api/v1',
@@ -51,7 +51,7 @@ export function getAIConfig(): AIProviderConfig | null {
   let provider = explicitProvider;
   let apiKey = process.env.AI_API_KEY || '';
   let baseURL = process.env.AI_BASE_URL || '';
-  let model = process.env.AI_MODEL || '';
+  let model = process.env.AI_MODEL || process.env.GROQ_MODEL || '';
 
   if (!provider) {
     if (process.env.GEMINI_API_KEY) {

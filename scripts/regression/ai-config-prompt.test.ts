@@ -32,7 +32,7 @@ const groqConfig = getAIConfig();
 assert.ok(groqConfig);
 assert.equal(groqConfig.provider, 'groq');
 assert.ok(groqConfig.baseURL.includes('api.groq.com'));
-assert.equal(groqConfig.model, 'llama-3.3-70b-versatile');
+assert.equal(groqConfig.model, 'qwen/qwen3.8-27b');
 delete process.env.GROQ_API_KEY;
 
 // 4. Kiểm tra DeepSeek auto-detection
