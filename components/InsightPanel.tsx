@@ -454,7 +454,15 @@ ${selectedSiHua.starName}化${selectedSiHua.siHua}落在【${palaceName}】，�
       const decoder = new TextDecoder();
       let assistantText = '';
 
-      setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
+      setMessages(prev => {
+        const clean = prev.filter(m =>
+          !m.content.includes('Luận giải thất bại') &&
+          !m.content.includes('Phiên bản mã nguồn') &&
+          !m.content.includes('开源版不含') &&
+          !m.content.includes('解读失败')
+        );
+        return [...clean, { role: 'assistant', content: '' }];
+      });
 
       while (true) {
         const { done, value } = await reader.read();
@@ -501,7 +509,15 @@ ${selectedSiHua.starName}化${selectedSiHua.siHua}落在【${palaceName}】，�
       content: m.content,
     }));
 
-    setMessages(prev => [...prev, userMsg]);
+    setMessages(prev => {
+      const clean = prev.filter(m =>
+        !m.content.includes('Luận giải thất bại') &&
+        !m.content.includes('Phiên bản mã nguồn') &&
+        !m.content.includes('开源版不含') &&
+        !m.content.includes('解读失败')
+      );
+      return [...clean, userMsg];
+    });
     setInput('');
     streamResponse(apiMessages);
   };

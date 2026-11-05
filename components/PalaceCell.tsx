@@ -91,8 +91,15 @@ export default function PalaceCell({
       );
     }
     const shortVi = BRIGHTNESS_SHORT_VI[raw] || raw;
+    const colorClass = (raw === '庙' || raw === '旺')
+      ? 'text-amber-400 font-bold'
+      : (raw === '得' || raw === '利')
+      ? 'text-emerald-400 font-medium'
+      : (raw === '平')
+      ? 'text-slate-400 font-normal'
+      : 'text-rose-400 font-semibold';
     return (
-      <span className="text-[8px] text-amber-500/80 ml-0.5 select-none font-medium">
+      <span className={clsx('text-[9px] ml-1 select-none font-mono', colorClass)}>
         [{shortVi}]
       </span>
     );
@@ -103,62 +110,60 @@ export default function PalaceCell({
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.35, delay, ease: 'easeOut' }}
       onClick={onClick}
-      className="relative flex flex-col p-1.5 cursor-pointer transition-all duration-200 h-full"
+      className="relative flex flex-col p-2 cursor-pointer transition-all duration-200 h-full border border-[rgba(212,168,67,0.12)] hover:border-[rgba(212,168,67,0.4)]"
       style={{
-        minHeight: '90px',
+        minHeight: '124px',
         background: isCurrentDaXian
-          ? 'rgba(147,51,234,0.08)'
+          ? 'rgba(147,51,234,0.12)'
           : isSelected
-          ? 'rgba(37,99,235,0.18)'
+          ? 'rgba(212,168,67,0.16)'
           : isSanFang
-          ? 'rgba(37,99,235,0.09)'
+          ? 'rgba(37,99,235,0.12)'
           : isMingGong
-          ? 'rgba(212,168,67,0.04)'
+          ? 'rgba(212,168,67,0.08)'
+          : isShenGong
+          ? 'rgba(56,189,248,0.06)'
           : 'var(--t-bg)',
         boxShadow: isCurrentDaXian
-          ? 'inset 3px 0 0 rgba(147,51,234,0.5)'
+          ? 'inset 3px 0 0 rgba(147,51,234,0.8)'
           : isSelected
-          ? 'inset 0 0 0 1.5px rgba(37,99,235,0.7)'
+          ? 'inset 0 0 0 1.5px rgba(212,168,67,0.85)'
           : isSanFang
-          ? 'inset 0 0 0 1px rgba(37,99,235,0.4)'
+          ? 'inset 0 0 0 1px rgba(37,99,235,0.5)'
           : 'none',
       }}
     >
-      {/* 大限年龄 */}
-      {daXianAge && (
-        <div className={clsx(
-          'absolute top-1 right-1 text-[9px] font-mono tabular-nums',
-          isCurrentDaXian ? 'text-purple-400' : ''
-        )}
-          style={!isCurrentDaXian ? { color: 'var(--t-faint)', opacity: 0.75 } : undefined}
-        >
-          {daXianAge[0]}–{daXianAge[1]}
+      {/* 宫名行 + Can Chi + Đại Hạn */}
+      <div className="flex items-center justify-between mb-1 pb-1 border-b border-[rgba(212,168,67,0.1)] gap-1">
+        <div className="flex items-center gap-1 min-w-0">
+          <span className={clsx('text-[11px] font-bold tracking-wide truncate',
+            isMingGong ? 'text-amber-400 font-extrabold' : isShenGong ? 'text-sky-400 font-bold' : 'text-amber-500/90'
+          )}>
+            {tPalace(name)}
+          </span>
+          {isMingGong && (
+            <span className="text-[8px] font-bold text-amber-300 bg-amber-500/20 border border-amber-500/40 px-1 rounded leading-tight flex-shrink-0">
+              {locale === 'vi' ? 'MỆNH' : '命'}
+            </span>
+          )}
+          {isShenGong && (
+            <span className="text-[8px] font-bold text-sky-300 bg-sky-500/20 border border-sky-500/40 px-1 rounded leading-tight flex-shrink-0">
+              {locale === 'vi' ? 'THÂN' : '身'}
+            </span>
+          )}
         </div>
-      )}
-
-      {/* 宫名行 */}
-      <div className="flex items-center gap-1 mb-0.5 pr-8">
-        <span className={clsx('text-[10px] font-medium tracking-wide truncate',
-          isMingGong ? 'text-amber-500' : isShenGong ? 'text-sky-500' : ''
-        )}
-          style={!isMingGong && !isShenGong ? { color: 'var(--t-faint)' } : undefined}
-        >
-          {tPalace(name)}
-        </span>
-        {isMingGong && (
-          <span className="text-[7px] text-amber-500/80 border border-amber-500/30 px-0.5 rounded leading-tight flex-shrink-0">
-            {locale === 'vi' ? 'Mệnh' : '命'}
-          </span>
-        )}
-        {isShenGong && (
-          <span className="text-[7px] text-sky-500/80 border border-sky-500/30 px-0.5 rounded leading-tight flex-shrink-0">
-            {locale === 'vi' ? 'Thân' : '身'}
-          </span>
-        )}
+        <div className="flex items-center gap-1 flex-shrink-0">
+          <span className="text-[9px] font-mono text-[var(--t-faint)] font-medium">{ganzhi}</span>
+          {daXianAge && (
+            <span className={clsx(
+              'text-[8px] font-mono tabular-nums px-1 py-0.5 rounded',
+              isCurrentDaXian ? 'text-purple-300 bg-purple-500/25 font-bold' : 'text-[var(--t-faint)] bg-black/20'
+            )}>
+              {daXianAge[0]}–{daXianAge[1]}
+            </span>
+          )}
+        </div>
       </div>
-
-      {/* 干支 */}
-      <div className="text-[9px] font-mono mb-1" style={{ color: 'var(--t-faint)', opacity: 0.75 }}>{ganzhi}</div>
 
       {/* 主星 */}
       <div className="flex flex-col gap-0.5 flex-1">

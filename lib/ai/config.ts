@@ -19,7 +19,7 @@ export interface AIProviderConfig {
 export const DEFAULT_PROVIDERS: Record<string, { baseURL: string; defaultModel: string }> = {
   gemini: {
     baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai',
-    defaultModel: 'gemini-1.5-flash',
+    defaultModel: 'gemini-2.0-flash',
   },
   groq: {
     baseURL: 'https://api.groq.com/openai/v1',
@@ -51,7 +51,7 @@ export function getAIConfig(): AIProviderConfig | null {
   let provider = explicitProvider;
   let apiKey = process.env.AI_API_KEY || '';
   let baseURL = process.env.AI_BASE_URL || '';
-  let model = process.env.AI_MODEL || process.env.GROQ_MODEL || '';
+  let model = process.env.AI_MODEL || process.env.GEMINI_MODEL || process.env.GROQ_MODEL || '';
 
   if (!provider) {
     if (process.env.GEMINI_API_KEY) {

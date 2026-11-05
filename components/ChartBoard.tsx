@@ -54,7 +54,7 @@ function getSanFangSiZheng(branch: number): [number, number, number, number] {
 const ANIMATION_ORDER = [5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3, 4];
 
 export default function ChartBoard({ chart, onStarSelect, onPalaceSelect, onSiHuaClick }: ChartBoardProps) {
-  const { locale, tPalace, tBranch, tWuxingJu } = useLanguage();
+  const { locale, tPalace, tStar, tStem, tBranch, tWuxingJu } = useLanguage();
   const isVi = locale === 'vi';
   const [selectedBranch, setSelectedBranch] = useState<number | null>(null);
   const [timeView, setTimeView] = useState<TimeView>('mingpan');
@@ -124,11 +124,11 @@ export default function ChartBoard({ chart, onStarSelect, onPalaceSelect, onSiHu
         className="grid rounded-xl overflow-hidden relative"
         style={{
           gridTemplateColumns: 'repeat(4, 1fr)',
-          gridTemplateRows: 'repeat(4, auto)',
-          gap: '1px',
+          gridTemplateRows: 'repeat(4, minmax(124px, 1fr))',
+          gap: '2px',
           background: 'var(--t-border)',
-          border: '1px solid var(--t-border)',
-          boxShadow: '0 4px 32px rgba(0,0,0,0.15)',
+          border: '2px solid var(--t-border)',
+          boxShadow: '0 8px 36px rgba(0,0,0,0.3)',
         }}
       >
         {ANIMATION_ORDER.map((branch, i) => {
@@ -157,52 +157,96 @@ export default function ChartBoard({ chart, onStarSelect, onPalaceSelect, onSiHu
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5 }}
-          className="flex flex-col items-center justify-center p-4 gap-3"
-          style={{ gridRow: '2 / 4', gridColumn: '2 / 4', background: 'var(--t-bg)' }}
+          className="relative flex flex-col justify-between p-3.5 card-glass overflow-hidden"
+          style={{
+            gridRow: '2 / 4',
+            gridColumn: '2 / 4',
+            background: 'linear-gradient(135deg, rgba(212,168,67,0.06) 0%, rgba(14,23,42,0.95) 50%, rgba(212,168,67,0.04) 100%)',
+          }}
         >
-          <div className="text-5xl select-none leading-none" style={{ color: 'var(--t-gold)', opacity: 0.12, filter: 'drop-shadow(0 0 12px rgba(180,120,30,0.15))' }}>
-            ☯
+          {/* Background Yin-Yang decoration */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+            <span className="text-8xl select-none" style={{ color: 'var(--t-gold)', opacity: 0.05, filter: 'drop-shadow(0 0 20px rgba(180,120,30,0.2))' }}>
+              ☯
+            </span>
           </div>
 
-          <div className="text-center space-y-1">
-            <div className="text-[9px] tracking-[0.3em] font-medium" style={{ color: 'var(--t-gold)' }}>
+          {/* Top header */}
+          <div className="relative z-10 text-center pb-2 border-b border-[rgba(212,168,67,0.15)]">
+            <div className="text-[10px] tracking-[0.4em] uppercase font-bold text-amber-400">
               {isVi ? 'TỬ VI ĐẨU SỐ' : '紫微斗数'}
             </div>
-            <div className="text-[10px] space-y-0.5" style={{ color: 'var(--t-faint)' }}>
-              <div>
-                {isVi ? 'Mệnh: ' : '命宫 '}
-                <span style={{ color: 'var(--t-gold)', opacity: 0.85 }}>{tBranch(chart.mingGongBranch)}</span>
+            {chart.birthInfo.name && (
+              <div className="text-[13px] font-bold text-[var(--t-text)] mt-0.5">
+                {chart.birthInfo.name} · <span className="text-amber-400 font-medium">{chart.yinYangGender || (chart.birthInfo.gender === 'male' ? 'Nam' : 'Nữ')}</span>
               </div>
-              <div>
-                {isVi ? 'Thân: ' : '身宫 '}
-                <span className="text-sky-500/80">{tBranch(chart.shenGongBranch)}</span>
-              </div>
-              <div className="text-[9px] font-medium" style={{ color: 'var(--t-gold)', opacity: 0.85 }}>
-                {tWuxingJu(chart.wuxingJu)}
-              </div>
-            </div>
+            )}
           </div>
 
+          {/* Four Pillars (Bát Tự Tứ Trụ) */}
+          {chart.lunarInfo.fourPillars && (
+            <div className="relative z-10 my-1 py-1 px-2 rounded-lg bg-black/25 border border-[rgba(212,168,67,0.12)]">
+              <div className="text-[8px] text-[var(--t-faint)] tracking-widest text-center mb-1 font-semibold uppercase">
+                {isVi ? 'Tứ Trụ Bát Tự (Năm · Tháng · Ngày · Giờ)' : '八字四柱'}
+              </div>
+              <div className="grid grid-cols-4 gap-1 text-center font-mono">
+                {chart.lunarInfo.fourPillars.map((p, idx) => (
+                  <div key={idx} className="bg-black/20 py-0.5 rounded">
+                    <div className="text-[10px] font-bold text-amber-300">
+                      {isVi ? `${tStem(p[0])} ${tBranch(p[1])}` : p}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Core Info Summary */}
+          <div className="relative z-10 grid grid-cols-2 gap-x-2 gap-y-1 text-[10px] px-1">
+            <div className="flex items-center justify-between">
+              <span className="text-[var(--t-faint)]">{isVi ? 'Cục số:' : '五行局:'}</span>
+              <span className="font-bold text-amber-300">{tWuxingJu(chart.wuxingJu)}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[var(--t-faint)]">{isVi ? 'Mệnh / Thân:' : '命身:'}</span>
+              <span className="font-semibold text-[var(--t-text)]">
+                {tBranch(chart.mingGongBranch)} / <span className="text-sky-400">{tBranch(chart.shenGongBranch)}</span>
+              </span>
+            </div>
+            {chart.mingZhu && (
+              <div className="flex items-center justify-between">
+                <span className="text-[var(--t-faint)]">{isVi ? 'Mệnh Chủ:' : '命主:'}</span>
+                <span className="font-medium text-amber-400">{tStar(chart.mingZhu)}</span>
+              </div>
+            )}
+            {chart.shenZhu && (
+              <div className="flex items-center justify-between">
+                <span className="text-[var(--t-faint)]">{isVi ? 'Thân Chủ:' : '身主:'}</span>
+                <span className="font-medium text-sky-400">{tStar(chart.shenZhu)}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Current DaXian Badge */}
           {chart.currentDaXianIndex >= 0 && (() => {
             const dx = chart.daXians[chart.currentDaXianIndex];
             return (
-              <div className="border border-purple-500/30 rounded-lg px-3 py-1.5 text-center"
-                style={{ background: 'rgba(147,51,234,0.06)' }}>
-                <div className="text-[8px] text-purple-500/80 mb-0.5 tracking-wider">
+              <div className="relative z-10 mt-1 border border-purple-500/30 rounded-lg py-1 px-2 flex items-center justify-between"
+                style={{ background: 'rgba(147,51,234,0.1)' }}>
+                <span className="text-[9px] text-purple-300 font-medium">
                   {isVi ? 'Đại Hạn Hiện Tại' : '当前大限'}
-                </div>
-                <div className="text-[12px] text-purple-400 font-medium tabular-nums">
-                  {dx.startAge}–{dx.endAge}{isVi ? ' tuổi' : '岁'}
-                </div>
-                <div className="text-[9px] text-purple-500/70 font-medium">{tPalace(dx.palaceName)}</div>
+                </span>
+                <span className="text-[11px] text-purple-200 font-bold tabular-nums">
+                  {dx.startAge}–{dx.endAge}{isVi ? ' tuổi' : '岁'} · {tPalace(dx.palaceName)}
+                </span>
               </div>
             );
           })()}
 
-          <div className="text-[8px] text-center leading-relaxed font-mono" style={{ color: 'var(--t-faint)', opacity: 0.75 }}>
-            {isVi ? 'Âm lịch ' : ''}
-            {chart.lunarInfo.lunarYear}·{chart.lunarInfo.isLeapMonth ? (isVi ? 'Nhuận' : '闰') : ''}
-            {chart.lunarInfo.lunarMonth}·{chart.lunarInfo.lunarDay}
+          {/* Lunar calendar footer */}
+          <div className="relative z-10 text-[9px] text-center text-[var(--t-faint)] font-mono pt-1 border-t border-[rgba(212,168,67,0.1)]">
+            {isVi ? 'Âm lịch: ' : '农历: '}
+            Ngày {chart.lunarInfo.lunarDay} thg {chart.lunarInfo.lunarMonth}{chart.lunarInfo.isLeapMonth ? (isVi ? ' (Nhuận)' : ' (闰)') : ''} năm {chart.lunarInfo.lunarYear}
           </div>
         </motion.div>
 

@@ -23,7 +23,7 @@ assert.ok(geminiConfig, 'Phải nhận diện được Gemini config');
 assert.equal(geminiConfig.provider, 'gemini');
 assert.equal(geminiConfig.apiKey, 'test-gemini-key');
 assert.ok(geminiConfig.baseURL.includes('generativelanguage.googleapis.com'));
-assert.equal(geminiConfig.model, 'gemini-1.5-flash');
+assert.equal(geminiConfig.model, 'gemini-2.0-flash');
 delete process.env.GEMINI_API_KEY;
 
 // 3. Kiểm tra Groq auto-detection

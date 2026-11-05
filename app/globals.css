@@ -49,6 +49,18 @@
   --bg-card: #FFFFFF;
   --bg-page: #fbf6e8;
 
+
+  /* ─── Chart & Theme Tokens (--t-*) ─── */
+  --t-bg: #fdfbf7;
+  --t-surface: #f5f0e3;
+  --t-card: rgba(255, 255, 255, 0.92);
+  --t-border: rgba(184, 146, 42, 0.28);
+  --t-border-acc: rgba(184, 146, 42, 0.55);
+  --t-gold: #b8922a;
+  --t-faint: #7a6e58;
+  --t-text: #1a1a18;
+  --t-text1: #2d2412;
+  --t-text2: #5a4e38;
   /* 圆角 */
   --r-xs:  4px;
   --r-sm:  8px;
@@ -88,6 +100,18 @@
 
   --bg-card: rgba(255,255,255,0.04);
   --bg-page: #020810;
+
+  /* ─── Chart & Theme Tokens (--t-*) ─── */
+  --t-bg: #070d18;
+  --t-surface: #0e172a;
+  --t-card: rgba(14, 23, 42, 0.92);
+  --t-border: rgba(212, 168, 67, 0.32);
+  --t-border-acc: rgba(212, 168, 67, 0.6);
+  --t-gold: #d4a843;
+  --t-faint: #8fa0ba;
+  --t-text: #e8eef6;
+  --t-text1: #dce4f0;
+  --t-text2: #9db0d0;
 }
 
 /* ─── 全局基础 ───────────────────────────────────────────── */
@@ -148,6 +172,20 @@ body {
   border-radius: var(--r-md);
 }
 
+
+/* Kính thủy tinh và thẻ bài */
+.card-glass {
+  background: var(--t-card, rgba(14, 23, 42, 0.92));
+  border: 1px solid var(--t-border, rgba(212, 168, 67, 0.32));
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.card-inner {
+  background: var(--t-surface, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--t-border, rgba(255, 255, 255, 0.1));
+}
 /* 深色区块 */
 .section-dark {
   background: var(--bg-inv);
